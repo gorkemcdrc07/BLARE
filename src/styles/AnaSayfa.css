@@ -358,33 +358,63 @@
     font-size: clamp(18px,1.4vw + 8px,24px)
 }
 
-/* ===== Kategoriler ===== */
-.ana .cat-grid {
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
-    gap: 14px
+/* ===== Filtre çipleri ===== */
+.filter-chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 8px 0 14px
 }
 
-@media(min-width:540px) {
-    .ana .cat-grid {
-        grid-template-columns: repeat(3,1fr)
+    .filter-chips .chip {
+        border: 1px solid var(--stroke);
+        background: #fff;
+        border-radius: 999px;
+        padding: 8px 12px;
+        font-weight: 800;
+        transition: background .2s, transform .15s, box-shadow .2s
     }
-}
 
-@media(min-width:900px) {
-    .ana .cat-grid {
-        grid-template-columns: repeat(4,1fr)
-    }
-}
+        .filter-chips .chip:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm)
+        }
 
-@media(min-width:1200px) {
-    .ana .cat-grid {
-        grid-template-columns: repeat(6,1fr)
-    }
-}
+        .filter-chips .chip.active {
+            background: #fff7ee;
+            border-color: #e9d9c8
+        }
 
-.ana .cat-card {
+/* ===== Yatay kategori carousel ===== */
+.cat-carousel {
     position: relative;
+    padding: 6px 34px
+}
+/* oklar için boşluk */
+.cat-track {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 2px 8px
+}
+
+    .cat-track::-webkit-scrollbar {
+        height: 8px
+    }
+
+    .cat-track::-webkit-scrollbar-thumb {
+        background: rgba(0,0,0,.08);
+        border-radius: 999px
+    }
+
+/* inline kartlar */
+.cat-card.inline {
+    min-width: clamp(160px,24vw,220px);
+    scroll-snap-align: start;
     display: grid;
     gap: 10px;
     padding: 14px;
@@ -393,20 +423,72 @@
     border: 1px solid var(--stroke);
     background: #fff;
     box-shadow: var(--shadow-md);
-    transition: transform .2s,box-shadow .2s,border-color .2s
+    transition: transform .2s, box-shadow .2s, border-color .2s
 }
 
-    .ana .cat-card:hover {
+    .cat-card.inline:hover {
         transform: translateY(-4px);
         box-shadow: var(--shadow-lg);
         border-color: #d2c3b4
     }
 
-.ana .cat-img {
-    height: 110px;
-    border-radius: 12px;
-    background: var(--card-grad)
+    .cat-card.inline .cat-img {
+        height: 110px;
+        border-radius: 12px;
+        background: var(--card-grad)
+    }
+
+/* nav okları */
+.car-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    border: none;
+    font-weight: 900;
+    background: #fff;
+    color: var(--ink);
+    box-shadow: var(--shadow-md);
+    z-index: 2;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center
 }
+
+    .car-nav:hover {
+        transform: translateY(-50%) scale(1.04)
+    }
+
+    .car-nav.left {
+        left: 2px
+    }
+
+    .car-nav.right {
+        right: 2px
+    }
+
+/* kenar fade efekti */
+.track-fade {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 42px;
+    pointer-events: none;
+    z-index: 1
+}
+
+    .track-fade.left {
+        left: 34px;
+        background: linear-gradient(90deg, rgba(250,246,241,1), rgba(250,246,241,0))
+    }
+
+    .track-fade.right {
+        right: 34px;
+        background: linear-gradient(270deg, rgba(250,246,241,1), rgba(250,246,241,0))
+    }
 
 /* ===== Kampanyalar ===== */
 .ana .promo-row {
@@ -583,7 +665,7 @@
     box-shadow: 0 12px 30px rgba(184,146,104,.35);
     font-weight: 800;
     z-index: 60;
-    transition: transform .15s, filter .15s;
+    transition: transform .15s, filter .15s
 }
 
     .fab:hover {
@@ -605,7 +687,7 @@
     border-radius: 999px;
     pointer-events: none;
     box-shadow: 0 0 0 0 rgba(184,146,104,.45);
-    animation: fabPulse 2s infinite;
+    animation: fabPulse 2s infinite
 }
 
 @keyframes fabPulse {
@@ -620,7 +702,7 @@
     inset: 0;
     background: rgba(0,0,0,.2);
     backdrop-filter: blur(2px);
-    z-index: 55;
+    z-index: 55
 }
 
 .chat-panel {
@@ -640,18 +722,18 @@
     flex-direction: column;
     overflow: hidden;
     z-index: 70;
-    transition: transform .2s ease, opacity .2s ease;
+    transition: transform .2s ease, opacity .2s ease
 }
 
     .chat-panel.open {
         transform: translateY(0) scale(1);
         opacity: 1;
-        pointer-events: auto;
+        pointer-events: auto
     }
 
 @media(max-height:620px) {
     .chat-panel {
-        height: 75vh;
+        height: 75vh
     }
 }
 
@@ -659,7 +741,7 @@
     .chat-panel {
         right: 10px;
         left: 10px;
-        width: auto;
+        width: auto
     }
 }
 
@@ -669,7 +751,7 @@
     justify-content: space-between;
     padding: 10px 12px;
     background: linear-gradient(180deg,#fff7ee,#f5ede4);
-    border-bottom: 1px solid var(--stroke);
+    border-bottom: 1px solid var(--stroke)
 }
 
 .chat-title {
@@ -677,7 +759,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    color: var(--ink);
+    color: var(--ink)
 }
 
 .dot-online {
@@ -694,14 +776,14 @@
     border: 1px solid var(--stroke);
     border-radius: 10px;
     padding: 6px 10px;
-    font-weight: 800;
+    font-weight: 800
 }
 
 .chat-body {
     flex: 1;
     padding: 12px;
     overflow: auto;
-    background: linear-gradient(180deg,#fff,#fdf7f1);
+    background: linear-gradient(180deg,#fff,#fdf7f1)
 }
 
 .msg {
@@ -709,24 +791,24 @@
     padding: 10px 12px;
     border-radius: 12px;
     margin: 6px 0;
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-sm)
 }
 
     .msg.bot {
         background: #fff;
-        border: 1px solid var(--stroke);
+        border: 1px solid var(--stroke)
     }
 
     .msg.you {
         background: #f7e8d7;
-        margin-left: auto;
+        margin-left: auto
     }
 
 .chips {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
-    margin-top: 6px;
+    margin-top: 6px
 }
 
 .chip {
@@ -734,7 +816,7 @@
     background: #fff;
     border-radius: 999px;
     padding: 6px 10px;
-    font-weight: 700;
+    font-weight: 700
 }
 
 .chat-input {
@@ -742,7 +824,7 @@
     gap: 8px;
     padding: 10px;
     border-top: 1px solid var(--stroke);
-    background: #fff;
+    background: #fff
 }
 
     .chat-input input {
@@ -750,7 +832,7 @@
         padding: 10px 12px;
         border-radius: 12px;
         border: 1px solid var(--stroke);
-        background: #fff;
+        background: #fff
     }
 
     .chat-input .send {
@@ -762,5 +844,5 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 10px 24px rgba(184,146,104,.25);
+        box-shadow: 0 10px 24px rgba(184,146,104,.25)
     }

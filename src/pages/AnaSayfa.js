@@ -11,26 +11,37 @@ function IconChevronR(props) { return (<svg width="14" height="14" viewBox="0 0 
 function IconBag(props) { return (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" {...props}><path d="M6 7h12l-1 12H7L6 7z" stroke="currentColor" strokeWidth="1.6" /><path d="M9 7a3 3 0 0 1 6 0" stroke="currentColor" strokeWidth="1.6" /></svg>) }
 
 export default function AnaSayfa({ onAdd, toUrunler }) {
-    // --------- Veri ---------
-    // SADECE KADIN KATEGORİLERİ
+    /* ===== Veri – Kadın kategorileri + grup anahtarları ===== */
     const kategoriler = [
-        { id: "kadin-ust", ad: "Üst Giyim" },
-        { id: "kadin-alt", ad: "Alt Giyim" },
-        { id: "kadin-elbise", ad: "Elbise" },
-        { id: "kadin-etek", ad: "Etek" },
-        { id: "kadin-pantolon", ad: "Pantolon" },
-        { id: "kadin-jean", ad: "Jean" },
-        { id: "kadin-tshirt", ad: "T-Shirt" },
-        { id: "kadin-sweatshirt", ad: "Sweatshirt" },
-        { id: "kadin-gomlek", ad: "Gömlek" },
-        { id: "kadin-ceket-mont", ad: "Ceket & Mont" },
-        { id: "kadin-kazak-hirka", ad: "Kazak & Hırka" },
-        { id: "kadin-sort", ad: "Şort" },
-        { id: "kadin-esofman", ad: "Eşofman" },
-        { id: "kadin-ic-giyim", ad: "İç Giyim" },
-        { id: "kadin-pijama", ad: "Pijama" },
-        { id: "kadin-plaj", ad: "Plaj Giyim" },
-        { id: "kadin-aksesuar", ad: "Aksesuar" },
+        { id: "kadin-ust", ad: "Üst Giyim", grup: "ust" },
+        { id: "kadin-alt", ad: "Alt Giyim", grup: "alt" },
+        { id: "kadin-elbise", ad: "Elbise", grup: "elbiseler" },
+        { id: "kadin-etek", ad: "Etek", grup: "alt" },
+        { id: "kadin-pantolon", ad: "Pantolon", grup: "alt" },
+        { id: "kadin-jean", ad: "Jean", grup: "alt" },
+        { id: "kadin-tshirt", ad: "T-Shirt", grup: "ust" },
+        { id: "kadin-sweatshirt", ad: "Sweatshirt", grup: "ust" },
+        { id: "kadin-gomlek", ad: "Gömlek", grup: "ust" },
+        { id: "kadin-ceket-mont", ad: "Ceket & Mont", grup: "dis" },
+        { id: "kadin-kazak-hirka", ad: "Kazak & Hırka", grup: "triko" },
+        { id: "kadin-sort", ad: "Şort", grup: "alt" },
+        { id: "kadin-esofman", ad: "Eşofman", grup: "alt" },
+        { id: "kadin-ic-giyim", ad: "İç Giyim", grup: "ic" },
+        { id: "kadin-pijama", ad: "Pijama", grup: "ic" },
+        { id: "kadin-plaj", ad: "Plaj Giyim", grup: "plaj" },
+        { id: "kadin-aksesuar", ad: "Aksesuar", grup: "aksesuar" },
+    ];
+
+    const filtreler = [
+        { id: "tum", ad: "Tümü" },
+        { id: "ust", ad: "Üst Giyim" },
+        { id: "alt", ad: "Alt Giyim" },
+        { id: "elbiseler", ad: "Elbise" },
+        { id: "triko", ad: "Kazak & Hırka" },
+        { id: "dis", ad: "Ceket & Mont" },
+        { id: "ic", ad: "İç/Pijama" },
+        { id: "plaj", ad: "Plaj" },
+        { id: "aksesuar", ad: "Aksesuar" },
     ];
 
     const kampanyalar = [
@@ -55,16 +66,12 @@ export default function AnaSayfa({ onAdd, toUrunler }) {
         { id: "ayk3", ad: "Koşu Ayakkabısı", fiyat: 1199 },
     ];
 
-    // --------- Kombin oluşturucu ---------
+    /* ===== Kombin oluşturucu ===== */
     const konbinler = useMemo(() => {
         const out = [];
         const len = Math.max(ust.length, alt.length, ayakkabi.length);
         for (let i = 0; i < len; i++) {
-            out.push({
-                ust: ust[i % ust.length],
-                alt: alt[i % alt.length],
-                ayakkabi: ayakkabi[i % ayakkabi.length],
-            });
+            out.push({ ust: ust[i % ust.length], alt: alt[i % alt.length], ayakkabi: ayakkabi[i % ayakkabi.length] });
         }
         return out;
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -74,18 +81,16 @@ export default function AnaSayfa({ onAdd, toUrunler }) {
     const aktif = konbinler[konbinIndex];
     const toplam = aktif.ust.fiyat + aktif.alt.fiyat + aktif.ayakkabi.fiyat;
 
-    // Otomatik slayt
     useEffect(() => {
         const t = setInterval(() => setKonbinIndex((i) => (i + 1) % konbinler.length), 6000);
         return () => clearInterval(t);
     }, [konbinler.length]);
 
-    // Toplamı yumuşak saydırma
     const [gosterilenToplam, setGosterilenToplam] = useState(toplam);
     const oncekiToplamRef = useRef(toplam);
     useEffect(() => {
         const start = performance.now();
-        const duration = 500; // ms
+        const duration = 500;
         const from = oncekiToplamRef.current;
         const to = toplam;
         let raf;
@@ -100,7 +105,6 @@ export default function AnaSayfa({ onAdd, toUrunler }) {
         return () => cancelAnimationFrame(raf);
     }, [toplam]);
 
-    // Sepete ekle (kombin)
     const konbinSepeteEkle = () => {
         onAdd?.({ id: aktif.ust.id, ad: aktif.ust.ad, fiyat: aktif.ust.fiyat });
         onAdd?.({ id: aktif.alt.id, ad: aktif.alt.ad, fiyat: aktif.alt.fiyat });
@@ -109,22 +113,49 @@ export default function AnaSayfa({ onAdd, toUrunler }) {
 
     const formatTL = (n) => n.toLocaleString("tr-TR") + "₺";
 
-    // ===== Chat FAB / Panel =====
+    /* ===== Chat ===== */
     const [chatOpen, setChatOpen] = useState(false);
-    const [messages, setMessages] = useState([
-        { from: "bot", text: "Merhaba! Nasıl yardımcı olabilirim? 👋" },
-    ]);
+    const [messages, setMessages] = useState([{ from: "bot", text: "Merhaba! Nasıl yardımcı olabilirim? 👋" }]);
     const [draft, setDraft] = useState("");
-
     const sendMsg = () => {
-        const t = draft.trim();
-        if (!t) return;
-        setMessages((prev) => [...prev, { from: "you", text: t }]);
-        setDraft("");
-        // basit otomatik yanıt (demo)
-        setTimeout(() => {
-            setMessages((prev) => [...prev, { from: "bot", text: "Not aldım, kısa sürede dönüş yapacağız. 🙌" }]);
-        }, 600);
+        const t = draft.trim(); if (!t) return;
+        setMessages((p) => [...p, { from: "you", text: t }]); setDraft("");
+        setTimeout(() => setMessages((p) => [...p, { from: "bot", text: "Not aldım, kısa sürede dönüş yapacağız. 🙌" }]), 600);
+    };
+
+    /* ===== Kategori: filtre + yatay otomatik kaydırma ===== */
+    const [aktifFiltre, setAktifFiltre] = useState("tum");
+    const trackRef = useRef(null);
+    const itemRefs = useRef([]);
+    itemRefs.current = [];
+
+    const filteredCats = useMemo(
+        () => (aktifFiltre === "tum" ? kategoriler : kategoriler.filter((k) => k.grup === aktifFiltre)),
+        [aktifFiltre]
+    );
+
+    // otomatik kaydır: her 4sn sonraki karta git
+    useEffect(() => {
+        if (!trackRef.current) return;
+        let i = 0;
+        const id = setInterval(() => {
+            if (itemRefs.current.length === 0) return;
+            i = (i + 1) % itemRefs.current.length;
+            itemRefs.current[i]?.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+        }, 4000);
+        return () => clearInterval(id);
+    }, [filteredCats]);
+
+    const kaydir = (dir) => {
+        const el = trackRef.current;
+        if (!el) return;
+        const card = el.querySelector(".cat-card.inline");
+        const step = card ? card.getBoundingClientRect().width + 16 : 280;
+        el.scrollBy({ left: dir * step, behavior: "smooth" });
+    };
+
+    const setItemRef = (el) => {
+        if (el && !itemRefs.current.includes(el)) itemRefs.current.push(el);
     };
 
     return (
@@ -140,9 +171,7 @@ export default function AnaSayfa({ onAdd, toUrunler }) {
                         <div className="hero__text">
                             <span className="eyebrow"><IconSparkle style={{ marginRight: 6 }} />Yeni Sezon</span>
                             <h1>Sezon Trendleri Seninle</h1>
-                            <p className="muted">
-                                Kategorilerde keşfet, kampanyaları yakala ve sana özel kombin önerilerini dene.
-                            </p>
+                            <p className="muted">Kategorilerde keşfet, kampanyaları yakala ve sana özel kombin önerilerini dene.</p>
 
                             <div className="hero-cta">
                                 <button className="primary" onClick={toUrunler}>Ürünleri Keşfet <IconChevronR style={{ marginLeft: 6 }} /></button>
@@ -152,17 +181,11 @@ export default function AnaSayfa({ onAdd, toUrunler }) {
                             <div className="hero__cards">
                                 <div className="mini-card">
                                     <div className="mini-img" />
-                                    <div>
-                                        <strong>Yeni Gelenler</strong>
-                                        <div className="small">Her gün güncellenir</div>
-                                    </div>
+                                    <div><strong>Yeni Gelenler</strong><div className="small">Her gün güncellenir</div></div>
                                 </div>
                                 <div className="mini-card">
                                     <div className="mini-img" />
-                                    <div>
-                                        <strong>Basic Koleksiyon</strong>
-                                        <div className="small">Minimal & rahat</div>
-                                    </div>
+                                    <div><strong>Basic Koleksiyon</strong><div className="small">Minimal & rahat</div></div>
                                 </div>
                             </div>
 
@@ -194,23 +217,47 @@ export default function AnaSayfa({ onAdd, toUrunler }) {
                     </div>
                 </section>
 
-                {/* KATEGORİLER */}
+                {/* KATEGORİLER – üstte filtre, altta yatay kaydırma */}
                 <section className="block">
                     <div className="block-head">
                         <h2>Kadın Kategorileri</h2>
                         <button className="link" onClick={() => toUrunler?.("kadin")}>Tümü →</button>
                     </div>
-                    <div className="cat-grid">
-                        {kategoriler.map((k) => (
+
+                    {/* Filtre çipleri */}
+                    <div className="filter-chips" role="tablist" aria-label="Kategori filtreleri">
+                        {filtreler.map((f) => (
                             <button
-                                key={k.id}
-                                className="cat-card"
-                                onClick={() => toUrunler?.(k.id)}
+                                key={f.id}
+                                role="tab"
+                                aria-selected={aktifFiltre === f.id}
+                                className={`chip ${aktifFiltre === f.id ? "active" : ""}`}
+                                onClick={() => setAktifFiltre(f.id)}
                             >
-                                <div className="cat-img" aria-hidden />
-                                <span>{k.ad}</span>
+                                {f.ad}
                             </button>
                         ))}
+                    </div>
+
+                    {/* Yatay kaydırmalı kategori şeridi */}
+                    <div className="cat-carousel">
+                        <button className="car-nav left" aria-label="Geri" onClick={() => kaydir(-1)}>‹</button>
+                        <div className="cat-track" ref={trackRef}>
+                            {filteredCats.map((k) => (
+                                <button
+                                    key={k.id}
+                                    ref={setItemRef}
+                                    className="cat-card inline"
+                                    onClick={() => toUrunler?.(k.id)}
+                                >
+                                    <div className="cat-img" aria-hidden />
+                                    <span>{k.ad}</span>
+                                </button>
+                            ))}
+                        </div>
+                        <button className="car-nav right" aria-label="İleri" onClick={() => kaydir(1)}>›</button>
+                        <div className="track-fade left" aria-hidden />
+                        <div className="track-fade right" aria-hidden />
                     </div>
                 </section>
 
@@ -271,9 +318,7 @@ export default function AnaSayfa({ onAdd, toUrunler }) {
                         </div>
 
                         <div className="combo-buy">
-                            <div className="combo-total">
-                                Toplam: <strong>{formatTL(gosterilenToplam)}</strong>
-                            </div>
+                            <div className="combo-total">Toplam: <strong>{formatTL(gosterilenToplam)}</strong></div>
                             <button className="primary" onClick={konbinSepeteEkle}><IconBag style={{ marginRight: 6 }} /> Bu Kombini Sepete Ekle</button>
                         </div>
 
@@ -316,7 +361,6 @@ export default function AnaSayfa({ onAdd, toUrunler }) {
                             {m.text}
                         </div>
                     ))}
-                    {/* hızlı öneriler */}
                     <div className="chips">
                         {["Kargo durumu", "İade talebi", "Beden önerisi"].map((t) => (
                             <button key={t} className="chip" onClick={() => setDraft(t)}>{t}</button>
