@@ -1,4 +1,5 @@
-﻿:root {
+﻿/* BLARÉ Navbar – cam efektli, AnaSayfa ile aynı çizgide ve tamamen responsive */
+:root {
     --ink: #3b2c23;
     --muted: #6b4e32;
     --stroke: #e6ded4;
@@ -10,129 +11,113 @@
     --r: 14px;
     --container-max: 1320px;
     --container-pad: 14px;
-    --page-pad: 20px; /* .ana { padding:20px } ile hizalı */
-    --nav-top: 12px; /* sticky offset */
-    --nav-h: 56px; /* ~navbar yüksekliği (mobil yerleşimde dropdown top için) */
+    --page-pad: 20px;
 }
 
 /* ===== Temel ===== */
 .navbar {
     position: sticky;
-    top: var(--nav-top);
+    top: 12px;
     z-index: 100;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 14px;
-    flex-wrap: nowrap; /* 🔒 satır kırılmasın */
     width: min(calc(100% - (2 * var(--page-pad))), var(--container-max));
     margin-inline: auto;
     padding: 10px var(--container-pad);
     border-radius: 20px;
     border: 1px solid var(--stroke);
     transition: box-shadow .25s, background .25s, transform .2s;
-    isolation: isolate; /* stacking context – alt açılırlar düzgün */
 }
 
     .navbar.glass {
         background: var(--bg);
         backdrop-filter: saturate(150%) blur(8px);
-        box-shadow: var(--shadow-md);
+        box-shadow: var(--shadow-md)
     }
 
     .navbar.scrolled {
-        box-shadow: var(--shadow-lg);
+        box-shadow: var(--shadow-lg)
     }
 
     .navbar svg {
-        display: block;
+        display: block
     }
 
-/* hizalama bölmeleri */
+/* Sol */
 .nav-left {
-    flex: 0 0 auto;
+    flex: 0 0 auto
 }
 
-.nav-right {
-    flex: 0 0 auto;
-    min-width: 0;
-}
-
-/* ===== Sol ===== */
-.nav-left .brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    color: var(--ink);
-}
+    .nav-left .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: var(--ink)
+    }
 
 .nav-logo {
     width: 36px;
     height: 36px;
     border-radius: 10px;
     object-fit: cover;
-    box-shadow: 0 6px 16px rgba(0,0,0,.08);
+    box-shadow: 0 6px 16px rgba(0,0,0,.08)
 }
 
 .brand-text {
     font-weight: 900;
     letter-spacing: .6px;
+    white-space: nowrap
 }
 
-/* ===== Orta (her zaman shrink + yatay kaydırma) ===== */
+/* Orta – her zaman kaydırmalı, asla kırılma yok */
 .nav-center {
+    flex: 1 1 auto;
+    min-width: 0;
     display: flex;
     align-items: center;
     gap: 14px;
     list-style: none;
-    padding: 0;
     margin: 0;
-    flex: 1 1 auto;
-    min-width: 0;
+    padding: 0;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+    scrollbar-width: none
 }
 
     .nav-center::-webkit-scrollbar {
-        display: none;
+        display: none
     }
 
     .nav-center > li {
-        flex: 0 0 auto;
+        flex: 0 0 auto
     }
 
     .nav-center a {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
         padding: 10px 12px;
-        line-height: 1;
         border-radius: 10px;
-        border: 1px solid transparent; /* 🔒 hover’da 1px zıplamasın */
         color: var(--ink);
         text-decoration: none;
         font-weight: 800;
-        white-space: nowrap; /* 🔒 asla iki satır olma */
-        transform: translateZ(0); /* 🔒 render yırtılması olmasın */
+        white-space: nowrap
     }
 
         .nav-center a:hover {
             background: #fff;
             box-shadow: var(--shadow-md);
-            border-color: var(--stroke);
+            border: 1px solid var(--stroke)
         }
 
         .nav-center a.active {
             background: #fff7ee;
-            border-color: #e9d9c8;
+            border: 1px solid #e9d9c8
         }
 
-/* ===== Dropdown ===== */
+/* Dropdown */
 .dropdown {
-    position: relative;
+    position: relative
 }
 
 .dropdown-menu {
@@ -150,13 +135,13 @@
     opacity: 0;
     pointer-events: none;
     transition: opacity .18s ease, transform .18s ease;
-    z-index: 10;
+    z-index: 10
 }
 
 .dropdown:hover .dropdown-menu {
     opacity: 1;
     pointer-events: auto;
-    transform: scale(1) translateY(6px);
+    transform: scale(1) translateY(6px)
 }
 
 .drop-item {
@@ -169,14 +154,24 @@
     font-weight: 800;
     color: var(--ink);
     cursor: pointer;
+    white-space: nowrap
 }
 
     .drop-item:hover {
         background: #fff7ee;
-        border-color: #e9d9c8;
+        border-color: #e9d9c8
     }
 
-/* ===== Sağ ===== */
+/* Sağ */
+.nav-right {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0
+}
+
+/* Arama */
 .search {
     display: flex;
     align-items: center;
@@ -189,7 +184,7 @@
     box-shadow: var(--shadow-md);
     width: clamp(220px, 30vw, 420px);
     min-width: 0;
-    flex: 1 1 auto;
+    flex: 1 1 auto
 }
 
     .search input {
@@ -201,7 +196,7 @@
         background: transparent;
         color: var(--ink);
         font-weight: 600;
-        min-width: 0;
+        min-width: 0
     }
 
     .search .btn {
@@ -214,14 +209,15 @@
         background: var(--brand);
         color: #fff;
         box-shadow: 0 10px 24px rgba(184,146,104,.25);
-        transition: transform .15s, filter .15s;
+        transition: transform .15s, filter .15s
     }
 
         .search .btn:hover {
             transform: translateY(-1px);
-            filter: brightness(.95);
+            filter: brightness(.95)
         }
 
+/* İkon butonları */
 .icon-btn {
     position: relative;
     display: inline-flex;
@@ -239,33 +235,28 @@
     font-weight: 800;
     color: var(--ink);
     transition: transform .15s, background .2s, border-color .2s;
+    white-space: nowrap
 }
 
     .icon-btn:hover {
-        transform: translateY(-2px);
+        transform: translateY(-2px)
     }
 
     .icon-btn.on {
         background: #fff7ee;
-        border-color: #e9d9c8;
+        border-color: #e9d9c8
     }
 
 .cart .icon-btn {
     width: 40px;
-    padding: 0;
+    padding: 0
 }
 
 .profile .icon-btn {
-    width: auto;
+    width: auto
 }
 
-.profile, .cart {
-    position: relative;
-    contain: layout paint;
-}
-/* 🔒 taşma/clip bug’ları azalt */
-
-/* ===== Açılır menüler – masaüstü varsayılan ===== */
+/* Açılır menüler (profil & sepet) */
 .menu {
     position: absolute;
     top: calc(100% + 8px);
@@ -279,19 +270,23 @@
     box-shadow: var(--shadow-lg);
     padding: 10px;
     z-index: 50;
-    animation: pop .18s ease both;
+    animation: pop .18s ease both
 }
 
 @keyframes pop {
     from {
         opacity: 0;
-        transform: translateY(-4px) scale(.98);
+        transform: translateY(-4px) scale(.98)
     }
 
     to {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translateY(0) scale(1)
     }
+}
+
+.profile {
+    position: relative
 }
 
 .menu .menu-item {
@@ -303,15 +298,19 @@
     border: 1px solid transparent;
     font-weight: 800;
     color: var(--ink);
-    cursor: pointer;
+    cursor: pointer
 }
 
     .menu .menu-item:hover {
         background: #fff7ee;
-        border-color: #e9d9c8;
+        border-color: #e9d9c8
     }
 
 /* Sepet içi */
+.cart {
+    position: relative
+}
+
 .cart-badge {
     position: absolute;
     top: -6px;
@@ -321,18 +320,18 @@
     font-size: 11px;
     padding: 2px 6px;
     border-radius: 999px;
-    box-shadow: 0 8px 18px rgba(184,146,104,.35);
+    box-shadow: 0 8px 18px rgba(184,146,104,.35)
 }
 
 .cart-menu {
-    width: min(calc(100vw - 32px), 420px);
+    width: min(calc(100vw - 32px), 420px)
 }
 
 .cart-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 4px 6px 8px;
+    padding: 4px 6px 8px
 }
 
 .cart-list {
@@ -340,7 +339,7 @@
     margin: 6px 0 8px;
     padding: 0;
     max-height: 320px;
-    overflow: auto;
+    overflow: auto
 }
 
 .cart-item {
@@ -351,33 +350,33 @@
     padding: 8px;
     border-radius: 12px;
     border: 1px solid var(--stroke);
-    background: #fff;
+    background: #fff
 }
 
     .cart-item + .cart-item {
-        margin-top: 8px;
+        margin-top: 8px
     }
 
 .cart-left {
     display: flex;
     gap: 10px;
-    align-items: center;
+    align-items: center
 }
 
 .thumb {
     width: 42px;
     height: 42px;
     border-radius: 10px;
-    background: linear-gradient(135deg,#f9f6f2,#f4ede6);
+    background: linear-gradient(135deg,#f9f6f2,#f4ede6)
 }
 
 .cart-title {
-    font-weight: 800;
+    font-weight: 800
 }
 
 .cart-actions {
     display: flex;
-    gap: 6px;
+    gap: 6px
 }
 
 .qty {
@@ -387,7 +386,7 @@
     border: 1px solid var(--stroke);
     background: #fff;
     font-weight: 900;
-    cursor: pointer;
+    cursor: pointer
 }
 
 .remove {
@@ -397,7 +396,7 @@
     padding: 6px 10px;
     border-radius: 8px;
     cursor: pointer;
-    font-weight: 800;
+    font-weight: 800
 }
 
 .cart-total {
@@ -406,7 +405,7 @@
     justify-content: space-between;
     padding: 8px;
     border-top: 1px dashed var(--stroke);
-    margin-top: 8px;
+    margin-top: 8px
 }
 
 .primary {
@@ -418,18 +417,18 @@
     background: var(--brand);
     color: #fff;
     box-shadow: 0 14px 28px rgba(184,146,104,.28);
-    cursor: pointer;
+    cursor: pointer
 }
 
     .primary:disabled {
         filter: grayscale(.4);
         opacity: .7;
-        cursor: not-allowed;
+        cursor: not-allowed
     }
 
 .empty {
     text-align: center;
-    padding: 12px 8px;
+    padding: 12px 8px
 }
 
 .link {
@@ -437,38 +436,37 @@
     border: 0;
     color: var(--ink);
     font-weight: 800;
-    cursor: pointer;
+    cursor: pointer
 }
 
-/* ===== Tablet portrait (≈680–840px) – sıkılaştır ===== */
+/* ===== Tablet portrait (≈680–840px) ===== */
 @media (min-width:680px) and (max-width:840px) {
     .navbar {
-        gap: 10px;
+        gap: 10px
     }
 
     .nav-center {
-        gap: 10px;
+        gap: 10px
     }
-    /* kaydırılabilir nav */
+
     .search {
-        flex: 0 1 260px;
-        width: auto;
+        width: clamp(160px, 34vw, 300px)
     }
-        /* daralt */
+
         .search .btn .label {
-            display: none;
+            display: none
         }
-    /* buton metnini gizle, ikon kalsın */
+
     .nav-right {
-        gap: 8px;
+        gap: 8px
     }
 
     .icon-btn {
-        height: 38px;
+        height: 38px
     }
 
     .cart .icon-btn {
-        width: 38px;
+        width: 38px
     }
 }
 
@@ -476,39 +474,41 @@
 @media (max-width:520px) {
     .navbar {
         top: 8px;
-        padding: 8px 10px;
+        padding: 8px 10px
     }
 
     .brand-text {
-        display: none;
+        display: none
     }
 
     .search {
-        flex: 1 1 220px;
-        width: auto;
-        padding: 6px 8px;
+        width: clamp(150px, 48vw, 300px);
+        padding: 6px 8px
     }
 
     .icon-btn {
         height: 36px;
-        border-radius: 10px;
+        border-radius: 10px
     }
 
     .cart .icon-btn {
-        width: 36px;
+        width: 36px
     }
+
+    .profile .icon-btn span {
+        display: none
+    }
+    /* metin varsa gizle */
 }
 
-/* ===== Küçük ekranda menüleri viewport’a sabitle (taşma olmasın) ===== */
+/* Menüler safe-area içinde kalsın (iOS çentik vs.) */
 @media (max-width:768px) {
     .menu, .cart-menu {
-        position: fixed; /* 🔑 artık butona göre değil viewport’a göre */
-        top: calc(env(safe-area-inset-top) + var(--nav-top) + var(--nav-h));
         right: max(8px, env(safe-area-inset-right));
         left: auto;
-        width: min(96vw, 420px);
-        max-height: min(70vh, 560px);
+        width: min(calc(100vw - 16px), 420px);
+        max-height: min(86vh, 640px);
         overflow: auto;
-        border-radius: 16px;
+        border-radius: 16px
     }
 }

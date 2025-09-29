@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../images/logo.jpg";
 import "./Navbar.css";
 
+/* Basit ikonlar (dış bağımlılık yok) */
 const IcSearch = (p) => (
     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" {...p}>
         <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.8" />
@@ -31,6 +32,7 @@ export default function Navbar({
     arama, setArama,
     toplamAdet, toplamTutar, formatTL,
     adetAzalt, sepeteEkle, urunSil, sepet,
+    sepetiTemizle = () => { },      // ✅ eklendi (varsayılan no-op)
     toUrunler
 }) {
     const [profilAcik, setProfilAcik] = useState(false);
@@ -40,6 +42,7 @@ export default function Navbar({
     const cartRef = useRef(null);
     const navigate = useNavigate();
 
+    // scroll gölgesi
     useEffect(() => {
         const onScroll = () => setShadow(window.scrollY > 4);
         onScroll();
@@ -47,6 +50,7 @@ export default function Navbar({
         return () => window.removeEventListener("scroll", onScroll);
     }, []);
 
+    // dışarı tıklayınca menüleri kapat
     useEffect(() => {
         const onClick = (e) => {
             if (profileRef.current && !profileRef.current.contains(e.target)) setProfilAcik(false);
@@ -68,6 +72,7 @@ export default function Navbar({
 
     return (
         <nav className={`navbar glass ${shadow ? "scrolled" : ""}`}>
+            {/* Sol */}
             <div className="nav-left">
                 <NavLink to="/" className="brand">
                     <img src={logo} className="nav-logo" alt="logo" />
@@ -75,6 +80,7 @@ export default function Navbar({
                 </NavLink>
             </div>
 
+            {/* Orta (her zaman yatay kaydırmalı) */}
             <ul className="nav-center">
                 <li>
                     <NavLink to="/" end className={({ isActive }) => (isActive ? "active" : "")}>
@@ -99,7 +105,9 @@ export default function Navbar({
                 </li>
             </ul>
 
+            {/* Sağ */}
             <div className="nav-right">
+                {/* Arama */}
                 <div className="search">
                     <IcSearch />
                     <input
@@ -109,11 +117,12 @@ export default function Navbar({
                         placeholder="Ürün ara…"
                         aria-label="Ürün ara"
                     />
-                    <button className="btn" onClick={aramayiGonder}>
+                    <button className="btn" onClick={aramayiGonder} aria-label="Ara">
                         <span className="label">Ara</span>
                     </button>
                 </div>
 
+                {/* Profil */}
                 <div className="profile" ref={profileRef}>
                     <button
                         className={`icon-btn ${profilAcik ? "on" : ""}`}
@@ -134,6 +143,7 @@ export default function Navbar({
                     )}
                 </div>
 
+                {/* Sepet */}
                 <div className="cart" ref={cartRef}>
                     <button
                         className={`icon-btn ${sepetAcik ? "on" : ""}`}
