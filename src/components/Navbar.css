@@ -1,5 +1,4 @@
-﻿/* BLARÉ Navbar – cam efektli, AnaSayfa ile aynı çizgide */
-:root {
+﻿:root {
     --ink: #3b2c23;
     --muted: #6b4e32;
     --stroke: #e6ded4;
@@ -9,28 +8,30 @@
     --shadow-lg: 0 18px 40px rgba(72,52,36,.12);
     --shadow-md: 0 8px 24px rgba(72,52,36,.10);
     --r: 14px;
-    /* container eşitleme (AnaSayfa.css ile aynı olmalı) */
     --container-max: 1320px;
     --container-pad: 14px;
-    --page-pad: 20px; /* .ana { padding: 20px } */
+    --page-pad: 20px; /* .ana { padding:20px } ile hizalı */
+    --nav-top: 12px; /* sticky offset */
+    --nav-h: 56px; /* ~navbar yüksekliği (mobil yerleşimde dropdown top için) */
 }
 
 /* ===== Temel ===== */
 .navbar {
     position: sticky;
-    top: 12px;
+    top: var(--nav-top);
     z-index: 100;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 14px;
-    /* FIX: 96vw yerine sayfa pedine göre tam hizalama */
+    flex-wrap: nowrap; /* 🔒 satır kırılmasın */
     width: min(calc(100% - (2 * var(--page-pad))), var(--container-max));
     margin-inline: auto;
     padding: 10px var(--container-pad);
     border-radius: 20px;
     border: 1px solid var(--stroke);
     transition: box-shadow .25s, background .25s, transform .2s;
+    isolation: isolate; /* stacking context – alt açılırlar düzgün */
 }
 
     .navbar.glass {
@@ -46,6 +47,16 @@
     .navbar svg {
         display: block;
     }
+
+/* hizalama bölmeleri */
+.nav-left {
+    flex: 0 0 auto;
+}
+
+.nav-right {
+    flex: 0 0 auto;
+    min-width: 0;
+}
 
 /* ===== Sol ===== */
 .nav-left .brand {
@@ -69,7 +80,7 @@
     letter-spacing: .6px;
 }
 
-/* ===== Orta ===== */
+/* ===== Orta (her zaman shrink + yatay kaydırma) ===== */
 .nav-center {
     display: flex;
     align-items: center;
@@ -77,27 +88,49 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
 }
 
+    .nav-center::-webkit-scrollbar {
+        display: none;
+    }
+
+    .nav-center > li {
+        flex: 0 0 auto;
+    }
+
     .nav-center a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
         padding: 10px 12px;
+        line-height: 1;
         border-radius: 10px;
+        border: 1px solid transparent; /* 🔒 hover’da 1px zıplamasın */
         color: var(--ink);
         text-decoration: none;
         font-weight: 800;
+        white-space: nowrap; /* 🔒 asla iki satır olma */
+        transform: translateZ(0); /* 🔒 render yırtılması olmasın */
     }
 
         .nav-center a:hover {
             background: #fff;
             box-shadow: var(--shadow-md);
-            border: 1px solid var(--stroke);
+            border-color: var(--stroke);
         }
 
         .nav-center a.active {
             background: #fff7ee;
-            border: 1px solid #e9d9c8;
+            border-color: #e9d9c8;
         }
 
+/* ===== Dropdown ===== */
 .dropdown {
     position: relative;
 }
@@ -144,13 +177,6 @@
     }
 
 /* ===== Sağ ===== */
-.nav-right {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-/* Arama */
 .search {
     display: flex;
     align-items: center;
@@ -161,7 +187,6 @@
     border-radius: 999px;
     padding: 8px 10px;
     box-shadow: var(--shadow-md);
-    /* FIX: min-width yerine esnek clamp + flex */
     width: clamp(220px, 30vw, 420px);
     min-width: 0;
     flex: 1 1 auto;
@@ -197,7 +222,6 @@
             filter: brightness(.95);
         }
 
-/* İkon butonları */
 .icon-btn {
     position: relative;
     display: inline-flex;
@@ -226,7 +250,6 @@
         border-color: #e9d9c8;
     }
 
-/* Sepet kare, profil esnek */
 .cart .icon-btn {
     width: 40px;
     padding: 0;
@@ -236,12 +259,17 @@
     width: auto;
 }
 
-/* Açılır menüler */
+.profile, .cart {
+    position: relative;
+    contain: layout paint;
+}
+/* 🔒 taşma/clip bug’ları azalt */
+
+/* ===== Açılır menüler – masaüstü varsayılan ===== */
 .menu {
     position: absolute;
     top: calc(100% + 8px);
     right: 0;
-    /* FIX: viewport + safe area sınırla */
     width: min(calc(100vw - 32px), 380px);
     max-height: min(80vh, 560px);
     overflow: auto;
@@ -266,10 +294,6 @@
     }
 }
 
-.profile {
-    position: relative;
-}
-
 .menu .menu-item {
     width: 100%;
     text-align: left;
@@ -288,10 +312,6 @@
     }
 
 /* Sepet içi */
-.cart {
-    position: relative;
-}
-
 .cart-badge {
     position: absolute;
     top: -6px;
@@ -420,22 +440,25 @@
     cursor: pointer;
 }
 
-/* ===== Responsive ===== */
-@media (max-width:920px) {
+/* ===== Tablet portrait (≈680–840px) – sıkılaştır ===== */
+@media (min-width:680px) and (max-width:840px) {
+    .navbar {
+        gap: 10px;
+    }
+
     .nav-center {
-        display: none;
+        gap: 10px;
     }
-
-    /* Arama daha da esnek, “Ara” metnini gizle */
+    /* kaydırılabilir nav */
     .search {
-        width: clamp(180px, 42vw, 360px);
+        flex: 0 1 260px;
+        width: auto;
     }
-
+        /* daralt */
         .search .btn .label {
             display: none;
         }
-
-    /* Sağ aksiyonları sıkıştır */
+    /* buton metnini gizle, ikon kalsın */
     .nav-right {
         gap: 8px;
     }
@@ -449,6 +472,7 @@
     }
 }
 
+/* ===== Genel mobil ===== */
 @media (max-width:520px) {
     .navbar {
         top: 8px;
@@ -460,7 +484,8 @@
     }
 
     .search {
-        width: clamp(150px, 46vw, 300px);
+        flex: 1 1 220px;
+        width: auto;
         padding: 6px 8px;
     }
 
@@ -472,19 +497,17 @@
     .cart .icon-btn {
         width: 36px;
     }
-    /* Profil butonunda metin varsa gizle – sadece ikon kalsın */
-    .profile .icon-btn span {
-        display: none;
-    }
 }
 
-/* Küçük ekranda menülerin taşmaması için güvenlik */
+/* ===== Küçük ekranda menüleri viewport’a sabitle (taşma olmasın) ===== */
 @media (max-width:768px) {
     .menu, .cart-menu {
+        position: fixed; /* 🔑 artık butona göre değil viewport’a göre */
+        top: calc(env(safe-area-inset-top) + var(--nav-top) + var(--nav-h));
         right: max(8px, env(safe-area-inset-right));
         left: auto;
-        width: min(calc(100vw - 16px), 420px);
-        max-height: min(86vh, 640px);
+        width: min(96vw, 420px);
+        max-height: min(70vh, 560px);
         overflow: auto;
         border-radius: 16px;
     }
