@@ -1,0 +1,49 @@
+﻿/* ÜRÜNLER SAYFASI */
+.urunler .block {
+    margin-top: 10px;
+}
+
+.urunler .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(240px,1fr));
+    gap: 20px;
+    margin-top: 12px;
+}
+
+.urunler .card {
+    background: #fff;
+    border: 1px solid var(--stroke);
+    border-radius: 16px;
+    padding: 14px;
+    box-shadow: 0 6px 16px rgba(0,0,0,.06);
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+    .urunler .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 24px rgba(0,0,0,.1);
+    }
+
+.urunler .card-img {
+    height: 160px;
+    border-radius: 12px;
+    background: linear-gradient(180deg,#f3f4f6,#e5e7eb);
+    margin-bottom: 10px;
+}
+
+.urunler .card-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.urunler .price {
+    font-weight: 700;
+}
+
+/* İsteğe bağlı: sol filtre paneli için alan (ileride kullanmak üzere) */
+.urunler .filters {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+}
