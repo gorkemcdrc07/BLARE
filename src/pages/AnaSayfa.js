@@ -11,7 +11,7 @@ function IconChevronR(props) { return (<svg width="14" height="14" viewBox="0 0 
 function IconBag(props) { return (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" {...props}><path d="M6 7h12l-1 12H7L6 7z" stroke="currentColor" strokeWidth="1.6" /><path d="M9 7a3 3 0 0 1 6 0" stroke="currentColor" strokeWidth="1.6" /></svg>) }
 
 export default function AnaSayfa({ onAdd, toUrunler }) {
-    /* ===== Veri – Kadın kategorileri + grup anahtarları ===== */
+    /* ===== Veri ===== */
     const kategoriler = [
         { id: "kadin-ust", ad: "Üst Giyim", grup: "ust" },
         { id: "kadin-alt", ad: "Alt Giyim", grup: "alt" },
@@ -33,15 +33,9 @@ export default function AnaSayfa({ onAdd, toUrunler }) {
     ];
 
     const filtreler = [
-        { id: "tum", ad: "Tümü" },
-        { id: "ust", ad: "Üst Giyim" },
-        { id: "alt", ad: "Alt Giyim" },
-        { id: "elbiseler", ad: "Elbise" },
-        { id: "triko", ad: "Kazak & Hırka" },
-        { id: "dis", ad: "Ceket & Mont" },
-        { id: "ic", ad: "İç/Pijama" },
-        { id: "plaj", ad: "Plaj" },
-        { id: "aksesuar", ad: "Aksesuar" },
+        { id: "tum", ad: "Tümü" }, { id: "ust", ad: "Üst Giyim" }, { id: "alt", ad: "Alt Giyim" },
+        { id: "elbiseler", ad: "Elbise" }, { id: "triko", ad: "Kazak & Hırka" }, { id: "dis", ad: "Ceket & Mont" },
+        { id: "ic", ad: "İç/Pijama" }, { id: "plaj", ad: "Plaj" }, { id: "aksesuar", ad: "Aksesuar" },
     ];
 
     const kampanyalar = [
@@ -134,16 +128,28 @@ export default function AnaSayfa({ onAdd, toUrunler }) {
         [aktifFiltre]
     );
 
-    // otomatik kaydır: her 4sn sonraki karta git
+    // otomatik kaydır: her 4sn sonraki karta git (kullanıcı elle kaydırıyorsa bekle)
     useEffect(() => {
         if (!trackRef.current) return;
-        let i = 0;
+        let i = 0, userScrolling = false, scrollTimer;
+        const onUserScroll = () => {
+            userScrolling = true;
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(() => (userScrolling = false), 800);
+        };
+        trackRef.current.addEventListener("scroll", onUserScroll, { passive: true });
+
         const id = setInterval(() => {
-            if (itemRefs.current.length === 0) return;
+            if (itemRefs.current.length === 0 || userScrolling) return;
             i = (i + 1) % itemRefs.current.length;
-            itemRefs.current[i]?.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+            itemRefs.current[i]?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
         }, 4000);
-        return () => clearInterval(id);
+
+        return () => {
+            clearInterval(id);
+            trackRef.current?.removeEventListener("scroll", onUserScroll);
+            clearTimeout(scrollTimer);
+        };
     }, [filteredCats]);
 
     const kaydir = (dir) => {
@@ -217,14 +223,13 @@ export default function AnaSayfa({ onAdd, toUrunler }) {
                     </div>
                 </section>
 
-                {/* KATEGORİLER – üstte filtre, altta yatay kaydırma */}
+                {/* KATEGORİLER */}
                 <section className="block">
                     <div className="block-head">
                         <h2>Kadın Kategorileri</h2>
                         <button className="link" onClick={() => toUrunler?.("kadin")}>Tümü →</button>
                     </div>
 
-                    {/* Filtre çipleri */}
                     <div className="filter-chips" role="tablist" aria-label="Kategori filtreleri">
                         {filtreler.map((f) => (
                             <button
@@ -336,7 +341,7 @@ export default function AnaSayfa({ onAdd, toUrunler }) {
                 </section>
             </main>
 
-            {/* ===== Floating Action Button (FAB) + Chat Panel ===== */}
+            {/* ===== FAB + Chat ===== */}
             <button
                 className="fab"
                 onClick={() => setChatOpen(true)}

@@ -1,17 +1,21 @@
-﻿/* BLARÉ Navbar – pastel/bej paletle modern cam efektli navbar */
+﻿/* BLARÉ Navbar – cam efektli, AnaSayfa ile aynı çizgide */
 :root {
     --ink: #3b2c23;
     --muted: #6b4e32;
     --stroke: #e6ded4;
-    --surface: #ffffff;
+    --surface: #fff;
     --brand: #b89268;
-    --bg: #faf6f1cc; /* cam arka plan */
+    --bg: #faf6f1cc;
     --shadow-lg: 0 18px 40px rgba(72,52,36,.12);
     --shadow-md: 0 8px 24px rgba(72,52,36,.10);
     --r: 14px;
+    /* container eşitleme (AnaSayfa.css ile aynı olmalı) */
+    --container-max: 1320px;
+    --container-pad: 14px;
+    --page-pad: 20px; /* .ana { padding: 20px } */
 }
 
-/* temel */
+/* ===== Temel ===== */
 .navbar {
     position: sticky;
     top: 12px;
@@ -20,12 +24,13 @@
     align-items: center;
     justify-content: space-between;
     gap: 14px;
-    padding: 10px 14px;
+    /* AnaSayfa’daki 20px kenar boşluğunu düşerek hizala */
+    width: min(calc(96vw - (2 * var(--page-pad))), var(--container-max));
     margin: 0 auto;
-    width: min(96vw,1320px);
-    transition: box-shadow .25s, background .25s, transform .2s;
+    padding: 10px var(--container-pad);
     border-radius: 20px;
     border: 1px solid var(--stroke);
+    transition: box-shadow .25s, background .25s, transform .2s;
 }
 
     .navbar.glass {
@@ -35,16 +40,20 @@
     }
 
     .navbar.scrolled {
-        box-shadow: var(--shadow-lg)
+        box-shadow: var(--shadow-lg);
     }
 
-/* sol */
+    .navbar svg {
+        display: block;
+    }
+
+/* ===== Sol ===== */
 .nav-left .brand {
     display: flex;
     align-items: center;
     gap: 10px;
     text-decoration: none;
-    color: var(--ink)
+    color: var(--ink);
 }
 
 .nav-logo {
@@ -52,22 +61,22 @@
     height: 36px;
     border-radius: 10px;
     object-fit: cover;
-    box-shadow: 0 6px 16px rgba(0,0,0,.08)
+    box-shadow: 0 6px 16px rgba(0,0,0,.08);
 }
 
 .brand-text {
     font-weight: 900;
-    letter-spacing: .6px
+    letter-spacing: .6px;
 }
 
-/* orta */
+/* ===== Orta ===== */
 .nav-center {
     display: flex;
     align-items: center;
     gap: 14px;
     list-style: none;
     padding: 0;
-    margin: 0
+    margin: 0;
 }
 
     .nav-center a {
@@ -75,22 +84,22 @@
         border-radius: 10px;
         color: var(--ink);
         text-decoration: none;
-        font-weight: 800
+        font-weight: 800;
     }
 
         .nav-center a:hover {
             background: #fff;
             box-shadow: var(--shadow-md);
-            border: 1px solid var(--stroke)
+            border: 1px solid var(--stroke);
         }
 
         .nav-center a.active {
             background: #fff7ee;
-            border: 1px solid #e9d9c8
+            border: 1px solid #e9d9c8;
         }
 
 .dropdown {
-    position: relative
+    position: relative;
 }
 
 .dropdown-menu {
@@ -108,13 +117,13 @@
     opacity: 0;
     pointer-events: none;
     transition: opacity .18s ease, transform .18s ease;
-    z-index: 10
+    z-index: 10;
 }
 
 .dropdown:hover .dropdown-menu {
     opacity: 1;
     pointer-events: auto;
-    transform: scale(1) translateY(6px)
+    transform: scale(1) translateY(6px);
 }
 
 .drop-item {
@@ -131,42 +140,46 @@
 
     .drop-item:hover {
         background: #fff7ee;
-        border-color: #e9d9c8
+        border-color: #e9d9c8;
     }
 
-/* sağ */
+/* ===== Sağ ===== */
 .nav-right {
     display: flex;
     align-items: center;
-    gap: 12px
+    gap: 12px;
 }
 
-/* arama */
+/* Arama */
 .search {
     display: flex;
     align-items: center;
     gap: 8px;
+    height: 40px;
     background: #fff;
     border: 1px solid var(--stroke);
     border-radius: 999px;
     padding: 8px 10px;
     box-shadow: var(--shadow-md);
-    min-width: clamp(220px, 30vw, 420px);
+    min-width: clamp(220px,30vw,420px);
 }
 
     .search input {
-        border: none;
-        outline: none;
+        flex: 1;
+        height: 100%;
+        padding: 0 10px;
+        border: 0;
+        outline: 0;
         background: transparent;
-        width: 100%;
         color: var(--ink);
-        font-weight: 600
+        font-weight: 600;
     }
 
     .search .btn {
-        border: none;
+        height: 100%;
+        padding: 0 12px;
         border-radius: 999px;
-        padding: 8px 12px;
+        border: 0;
         font-weight: 800;
         cursor: pointer;
         background: var(--brand);
@@ -177,17 +190,20 @@
 
         .search .btn:hover {
             transform: translateY(-1px);
-            filter: brightness(.95)
+            filter: brightness(.95);
         }
 
-/* ikon butonları */
+/* İkon butonları */
 .icon-btn {
     position: relative;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
-    padding: 8px 10px;
+    height: 40px;
+    padding: 0 10px;
     border-radius: 12px;
+    line-height: 1;
     border: 1px solid var(--stroke);
     background: #fff;
     box-shadow: var(--shadow-md);
@@ -198,20 +214,30 @@
 }
 
     .icon-btn:hover {
-        transform: translateY(-2px)
+        transform: translateY(-2px);
     }
 
     .icon-btn.on {
         background: #fff7ee;
-        border-color: #e9d9c8
+        border-color: #e9d9c8;
     }
 
-/* açılır menüler (profil/sepet) */
+/* Sepet kare, profil esnek */
+.cart .icon-btn {
+    width: 40px;
+    padding: 0;
+}
+
+.profile .icon-btn {
+    width: auto;
+}
+
+/* Açılır menüler */
 .menu {
     position: absolute;
     top: calc(100% + 8px);
     right: 0;
-    width: min(92vw, 380px);
+    width: min(92vw,380px);
     background: #fff;
     border: 1px solid var(--stroke);
     border-radius: 14px;
@@ -224,17 +250,17 @@
 @keyframes pop {
     from {
         opacity: 0;
-        transform: translateY(-4px) scale(.98)
+        transform: translateY(-4px) scale(.98);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0) scale(1)
+        transform: translateY(0) scale(1);
     }
 }
 
 .profile {
-    position: relative
+    position: relative;
 }
 
 .menu .menu-item {
@@ -251,12 +277,12 @@
 
     .menu .menu-item:hover {
         background: #fff7ee;
-        border-color: #e9d9c8
+        border-color: #e9d9c8;
     }
 
-/* sepet */
+/* Sepet içi */
 .cart {
-    position: relative
+    position: relative;
 }
 
 .cart-badge {
@@ -268,18 +294,18 @@
     font-size: 11px;
     padding: 2px 6px;
     border-radius: 999px;
-    box-shadow: 0 8px 18px rgba(184,146,104,.35)
+    box-shadow: 0 8px 18px rgba(184,146,104,.35);
 }
 
 .cart-menu {
-    width: min(92vw, 420px)
+    width: min(92vw,420px);
 }
 
 .cart-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 4px 6px 8px
+    padding: 4px 6px 8px;
 }
 
 .cart-list {
@@ -287,7 +313,7 @@
     margin: 6px 0 8px;
     padding: 0;
     max-height: 320px;
-    overflow: auto
+    overflow: auto;
 }
 
 .cart-item {
@@ -302,29 +328,29 @@
 }
 
     .cart-item + .cart-item {
-        margin-top: 8px
+        margin-top: 8px;
     }
 
 .cart-left {
     display: flex;
     gap: 10px;
-    align-items: center
+    align-items: center;
 }
 
 .thumb {
     width: 42px;
     height: 42px;
     border-radius: 10px;
-    background: linear-gradient(135deg,#f9f6f2,#f4ede6)
+    background: linear-gradient(135deg,#f9f6f2,#f4ede6);
 }
 
 .cart-title {
-    font-weight: 800
+    font-weight: 800;
 }
 
 .cart-actions {
     display: flex;
-    gap: 6px
+    gap: 6px;
 }
 
 .qty {
@@ -334,18 +360,17 @@
     border: 1px solid var(--stroke);
     background: #fff;
     font-weight: 900;
-    cursor: pointer
+    cursor: pointer;
 }
 
 .remove {
-    border: none;
+    border: 1px solid #f0d9bd;
     background: #fff2e0;
     color: #7a4b25;
-    border: 1px solid #f0d9bd;
     padding: 6px 10px;
     border-radius: 8px;
     cursor: pointer;
-    font-weight: 800
+    font-weight: 800;
 }
 
 .cart-total {
@@ -354,25 +379,25 @@
     justify-content: space-between;
     padding: 8px;
     border-top: 1px dashed var(--stroke);
-    margin-top: 8px
+    margin-top: 8px;
 }
 
 .primary {
     width: 100%;
-    border: none;
+    border: 0;
     border-radius: 12px;
     padding: 12px;
     font-weight: 900;
     background: var(--brand);
     color: #fff;
     box-shadow: 0 14px 28px rgba(184,146,104,.28);
-    cursor: pointer
+    cursor: pointer;
 }
 
     .primary:disabled {
         filter: grayscale(.4);
         opacity: .7;
-        cursor: not-allowed
+        cursor: not-allowed;
     }
 
 .empty {
@@ -380,93 +405,37 @@
     padding: 12px 8px;
 }
 
-/* link minimalist */
 .link {
     background: transparent;
-    border: none;
+    border: 0;
     color: var(--ink);
     font-weight: 800;
-    cursor: pointer
+    cursor: pointer;
 }
 
-/* responsive */
-@media (max-width: 920px) {
+/* ===== Responsive ===== */
+@media (max-width:920px) {
     .nav-center {
-        display: none
+        display: none;
     }
-    /* mobilde sadeleştir */
+
     .search {
-        min-width: 54vw
+        min-width: 54vw;
     }
 }
 
-@media (max-width: 520px) {
+@media (max-width:520px) {
     .navbar {
         top: 8px;
-        padding: 8px 10px
+        padding: 8px 10px;
     }
 
     .brand-text {
-        display: none
+        display: none;
     }
 
     .search {
         min-width: 56vw;
-        padding: 6px 8px
+        padding: 6px 8px;
     }
 }
-.navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.nav-left, .nav-right {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-.nav-center {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.search {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    height: 40px;
-}
-
-    .search input {
-        height: 100%;
-        padding: 0 10px;
-        border: 1px solid #e6e6e6;
-        border-radius: 8px;
-    }
-
-    .search .btn {
-        height: 100%;
-        padding: 0 12px;
-        border-radius: 8px;
-    }
-
-.icon-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-}
-
-.cart-badge {
-    top: -6px;
-    right: -6px;
-}
-
