@@ -893,3 +893,154 @@
         inset-inline: 4px auto;
     }
 }
+
+/* =====================  MOBİL DÜZENLEMELER  ===================== */
+/* iPhone çentik alanlarını da dikkate alır */
+
+@media (max-width: 768px) {
+    /* Güvenli alan pedleri + ferah panel */
+    .ana {
+        padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) calc(max(12px, env(safe-area-inset-bottom)) + 0px) max(12px, env(safe-area-inset-left));
+    }
+
+    .page-wrap {
+        width: 100%;
+        max-width: var(--container-max);
+        padding-inline: max(12px, env(safe-area-inset-left));
+    }
+
+    /* HERO sadeleştirme */
+    .ana .hero {
+        padding: 18px;
+        border-radius: 16px;
+    }
+
+    .ana .hero__text h1 {
+        font-size: clamp(26px, 6vw, 34px);
+        letter-spacing: -0.2px;
+    }
+
+    .ana .hero__cards {
+        grid-template-columns: 1fr;
+    }
+
+    .ana .hero__benefits {
+        padding: 8px;
+        gap: 6px;
+    }
+
+        .ana .hero__benefits li {
+            padding: 6px 8px;
+            font-size: 14px;
+        }
+
+    .ana .look-card {
+        padding: 10px;
+    }
+
+    .ana .look-img {
+        height: 160px;
+    }
+
+    .ana .look-row {
+        grid-template-columns: 1fr;
+    }
+
+    /* Filtre çipleri yatay kaydırılabilir */
+    .filter-chips {
+        display: flex;
+        overflow-x: auto;
+        gap: 8px;
+        padding: 6px 2px;
+        scroll-snap-type: x proximity;
+        -webkit-overflow-scrolling: touch;
+    }
+
+        .filter-chips .chip {
+            flex: 0 0 auto;
+            white-space: nowrap;
+            scroll-snap-align: start;
+        }
+
+    /* Kategori carousel */
+    .cat-carousel {
+        overflow: visible;
+    }
+
+    .car-nav {
+        display: none;
+    }
+
+    .cat-track {
+        gap: 12px;
+        padding: 2px 0 6px;
+        scroll-padding-inline: 12px;
+    }
+
+    .cat-card.inline {
+        flex-basis: clamp(160px, 52vw, 220px);
+        padding: 12px;
+    }
+
+        .cat-card.inline .cat-img {
+            height: 92px;
+        }
+
+    /* Kampanya / Kombin */
+    .ana .promo-card {
+        padding: 14px;
+        border-radius: 16px;
+    }
+
+    .ana .combo {
+        padding: 12px;
+    }
+
+    .ana .combo-card {
+        grid-template-columns: 72px 1fr;
+    }
+
+    .ana .card-img {
+        height: 110px;
+    }
+
+    /* FAB: daha küçük, güvenli alan üstünde */
+    .fab {
+        right: max(12px, env(safe-area-inset-right));
+        bottom: calc(12px + env(safe-area-inset-bottom));
+        padding: 12px 14px;
+    }
+
+    .fab-label {
+        display: none;
+    }
+    /* sadece ikon */
+}
+
+/* Çok küçük ekranlar */
+@media (max-width: 380px) {
+    .ana .hero__text h1 {
+        font-size: 26px;
+    }
+
+    .cat-card.inline {
+        flex-basis: 155px;
+    }
+
+    .ana .combo-card {
+        grid-template-columns: 64px 1fr;
+    }
+}
+
+/* Sohbet paneli: mobilde alttan açılan tam genişlik */
+@media (max-width: 768px) {
+    .chat-panel {
+        right: 0;
+        left: 0;
+        bottom: 0;
+        width: 100vw;
+        max-width: none;
+        height: min(92vh, 640px);
+        border-radius: 16px 16px 0 0;
+    }
+}

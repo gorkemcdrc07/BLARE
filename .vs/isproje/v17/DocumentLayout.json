@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\Gorkem.Cadirci\\isproje\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Gorkem.Cadirci\\isproje\\src\\components\\Navbar.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\Navbar.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Gorkem.Cadirci\\isproje\\src\\styles\\AnaSayfa.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\styles\\AnaSayfa.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Gorkem.Cadirci\\isproje\\src\\pages\\AnaSayfa.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\pages\\AnaSayfa.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Gorkem.Cadirci\\isproje\\src\\components\\Navbar.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\Navbar.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Gorkem.Cadirci\\isproje\\src\\components\\Navbar.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
@@ -26,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,33 +38,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "Navbar.css",
               "DocumentMoniker": "C:\\Users\\Gorkem.Cadirci\\isproje\\src\\components\\Navbar.css",
               "RelativeDocumentMoniker": "src\\components\\Navbar.css",
               "ToolTip": "C:\\Users\\Gorkem.Cadirci\\isproje\\src\\components\\Navbar.css",
               "RelativeToolTip": "src\\components\\Navbar.css",
-              "ViewState": "AgIAAIQBAAAAAAAAAAAgwLkBAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAALYBAAAAAAAAAAAgwMsBAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
               "WhenOpened": "2025-09-29T11:00:48.39Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "AnaSayfa.css",
               "DocumentMoniker": "C:\\Users\\Gorkem.Cadirci\\isproje\\src\\styles\\AnaSayfa.css",
               "RelativeDocumentMoniker": "src\\styles\\AnaSayfa.css",
               "ToolTip": "C:\\Users\\Gorkem.Cadirci\\isproje\\src\\styles\\AnaSayfa.css",
               "RelativeToolTip": "src\\styles\\AnaSayfa.css",
-              "ViewState": "AgIAAEoDAAAAAAAAAAAgwH8DAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAOEDAAAAAAAAAAAgwBYEAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
               "WhenOpened": "2025-09-28T19:12:27.657Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "AnaSayfa.js",
               "DocumentMoniker": "C:\\Users\\Gorkem.Cadirci\\isproje\\src\\pages\\AnaSayfa.js",
               "RelativeDocumentMoniker": "src\\pages\\AnaSayfa.js",
@@ -72,8 +72,7 @@
               "RelativeToolTip": "src\\pages\\AnaSayfa.js",
               "ViewState": "AgIAAFMBAAAAAAAAAAAYwIYBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-09-28T19:12:03.567Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-28T19:12:03.567Z"
             },
             {
               "$type": "Document",

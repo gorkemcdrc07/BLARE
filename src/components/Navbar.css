@@ -24,9 +24,9 @@
     align-items: center;
     justify-content: space-between;
     gap: 14px;
-    /* AnaSayfa’daki 20px kenar boşluğunu düşerek hizala */
-    width: min(calc(96vw - (2 * var(--page-pad))), var(--container-max));
-    margin: 0 auto;
+    /* FIX: 96vw yerine sayfa pedine göre tam hizalama */
+    width: min(calc(100% - (2 * var(--page-pad))), var(--container-max));
+    margin-inline: auto;
     padding: 10px var(--container-pad);
     border-radius: 20px;
     border: 1px solid var(--stroke);
@@ -161,7 +161,10 @@
     border-radius: 999px;
     padding: 8px 10px;
     box-shadow: var(--shadow-md);
-    min-width: clamp(220px,30vw,420px);
+    /* FIX: min-width yerine esnek clamp + flex */
+    width: clamp(220px, 30vw, 420px);
+    min-width: 0;
+    flex: 1 1 auto;
 }
 
     .search input {
@@ -173,6 +176,7 @@
         background: transparent;
         color: var(--ink);
         font-weight: 600;
+        min-width: 0;
     }
 
     .search .btn {
@@ -237,7 +241,10 @@
     position: absolute;
     top: calc(100% + 8px);
     right: 0;
-    width: min(92vw,380px);
+    /* FIX: viewport + safe area sınırla */
+    width: min(calc(100vw - 32px), 380px);
+    max-height: min(80vh, 560px);
+    overflow: auto;
     background: #fff;
     border: 1px solid var(--stroke);
     border-radius: 14px;
@@ -298,7 +305,7 @@
 }
 
 .cart-menu {
-    width: min(92vw,420px);
+    width: min(calc(100vw - 32px), 420px);
 }
 
 .cart-head {
@@ -419,8 +426,26 @@
         display: none;
     }
 
+    /* Arama daha da esnek, “Ara” metnini gizle */
     .search {
-        min-width: 54vw;
+        width: clamp(180px, 42vw, 360px);
+    }
+
+        .search .btn .label {
+            display: none;
+        }
+
+    /* Sağ aksiyonları sıkıştır */
+    .nav-right {
+        gap: 8px;
+    }
+
+    .icon-btn {
+        height: 38px;
+    }
+
+    .cart .icon-btn {
+        width: 38px;
     }
 }
 
@@ -435,7 +460,32 @@
     }
 
     .search {
-        min-width: 56vw;
+        width: clamp(150px, 46vw, 300px);
         padding: 6px 8px;
+    }
+
+    .icon-btn {
+        height: 36px;
+        border-radius: 10px;
+    }
+
+    .cart .icon-btn {
+        width: 36px;
+    }
+    /* Profil butonunda metin varsa gizle – sadece ikon kalsın */
+    .profile .icon-btn span {
+        display: none;
+    }
+}
+
+/* Küçük ekranda menülerin taşmaması için güvenlik */
+@media (max-width:768px) {
+    .menu, .cart-menu {
+        right: max(8px, env(safe-area-inset-right));
+        left: auto;
+        width: min(calc(100vw - 16px), 420px);
+        max-height: min(86vh, 640px);
+        overflow: auto;
+        border-radius: 16px;
     }
 }
