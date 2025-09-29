@@ -846,3 +846,73 @@
         justify-content: center;
         box-shadow: 0 10px 24px rgba(184,146,104,.25)
     }
+/* Hero iç hizalama */
+.hero__inner {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 32px;
+    align-items: stretch;
+}
+
+/* CTA ve mini kart hizası */
+.hero-cta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.mini-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Kategori carousel kart eşit boy */
+.cat-track {
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+}
+
+.cat-card.inline {
+    flex: 0 0 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Kombin kart hizaları */
+.combo-items {
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+}
+
+.combo-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-img {
+    height: 140px;
+    border-radius: 12px;
+    background: var(--card-grad);
+}
+
+.combo-buy {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Etiket/ikon baseline fix */
+.badge, .tag, .chip, .b-ic {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
